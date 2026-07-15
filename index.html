@@ -143,6 +143,59 @@
             }
         }
 
+        /* Subscription Section */
+        .subscription-section {
+            background-color: var(--bg-alt);
+        }
+        .subs-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 15px 35px -5px rgba(0,0,0,0.1);
+        }
+        .subs-input {
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.03);
+            color: var(--text-primary);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s;
+        }
+        :root[data-theme="dark"] .subs-input {
+            background: rgba(255,255,255,0.05);
+        }
+        .subs-input:focus {
+            border-color: var(--primary);
+            background: transparent;
+        }
+        .btn-sub {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 10px 20px -10px #10b981;
+        }
+        .btn-sub:hover { box-shadow: 0 15px 25px -10px #10b981; }
+        .btn-unsub {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 10px 20px -10px #ef4444;
+        }
+        .btn-unsub:hover { box-shadow: 0 15px 25px -10px #ef4444; }
+        .subs-status {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            min-height: 24px;
+        }
+        .subs-status.error { color: #ef4444; }
+        .subs-status.success { color: #10b981; }
+        .view-hidden { display: none !important; }
+
         /* Generic Section Styling */
         section {
             padding: 100px 5%;
@@ -546,6 +599,7 @@
         <div class="nav-links">
             <a href="#about" class="nav-item">About</a>
             <a href="#how-it-works" class="nav-item">How It Works</a>
+            <a href="#subscription" class="nav-item">Manage Subscription</a>
             <a href="#features" class="nav-item">Features</a>
             <a href="#faq" class="nav-item">FAQ</a>
             <div style="font-weight: 600; color: var(--primary); margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border-color);">Powered by BDApps</div>
@@ -627,6 +681,35 @@
                 <h3>Play & Learn</h3>
                 <p>Select your favorite categories, answer questions under time pressure, and review your performance to boost your knowledge.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Manage Subscription -->
+    <section id="subscription" class="subscription-section">
+        <div class="section-title">
+            <h2>Manage Subscription</h2>
+            <p>Subscribe, verify your OTP, or unsubscribe effortlessly.</p>
+        </div>
+        <div class="subs-card">
+            <div id="subs-mobile-view">
+                <input type="tel" id="mobileInput" class="subs-input" placeholder="01XXXXXXXXX or 8801XXXXXXXXX">
+                <button class="btn" onclick="handleCheckStatus()">Check Status & Subscribe</button>
+            </div>
+            
+            <div id="subs-otp-view" class="view-hidden">
+                <p style="margin-bottom: 20px; color: var(--text-secondary);">An OTP has been sent to your mobile.</p>
+                <input type="number" id="otpInput" class="subs-input" placeholder="Enter 6-digit OTP">
+                <button class="btn btn-sub" onclick="handleVerifyOtp()">Verify & Subscribe</button>
+            </div>
+
+            <div id="subs-active-view" class="view-hidden">
+                <div style="font-size: 48px; color: #10b981; margin-bottom: 16px;"><i class="fa-solid fa-circle-check"></i></div>
+                <h3 style="margin-bottom: 8px;">Subscription Active</h3>
+                <p style="margin-bottom: 24px; color: var(--text-secondary);">You are currently registered to QuizNest Brain.</p>
+                <button class="btn btn-unsub" onclick="handleUnsubscribe()">Unsubscribe</button>
+            </div>
+
+            <div id="subs-status-text" class="subs-status"></div>
         </div>
     </section>
 
@@ -738,6 +821,95 @@
                 icon.className = 'fa-solid fa-sun'; // Show sun in dark mode to switch to light
             } else {
                 icon.className = 'fa-solid fa-moon'; // Show moon in light mode to switch to dark
+            }
+        }
+
+        // --- Subscription Management Logic ---
+        const API_BASE = "https://bdappsdigitalapps.com/NADB26093";
+        let currentMobile = "";
+        let currentRefNo = "";
+
+        const viewMobile = document.getElementById('subs-mobile-view');
+        const viewOtp = document.getElementById('subs-otp-view');
+        const viewActive = document.getElementById('subs-active-view');
+        const statusText = document.getElementById('subs-status-text');
+
+        function setStatus(msg, type = '') {
+            statusText.textContent = msg;
+            statusText.className = 'subs-status ' + type;
+        }
+
+        function showView(view) {
+            viewMobile.classList.add('view-hidden');
+            viewOtp.classList.add('view-hidden');
+            viewActive.classList.add('view-hidden');
+            view.classList.remove('view-hidden');
+            setStatus('');
+        }
+
+        async function apiCall(endpoint, body) {
+            try {
+                const response = await fetch(`${API_BASE}/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(body).toString()
+                });
+                return await response.json();
+            } catch (e) {
+                console.error(e);
+                return { success: false, message: 'Network error. Ensure CORS is enabled on your PHP server.' };
+            }
+        }
+
+        async function handleCheckStatus() {
+            const mobile = document.getElementById('mobileInput').value.trim();
+            if(!mobile) return setStatus('Please enter a mobile number.', 'error');
+            
+            setStatus('Checking status...', '');
+            currentMobile = mobile;
+
+            const res = await apiCall('check_subscription.php', { user_mobile: mobile });
+            
+            if(res.isSubscribed || res.subscriptionStatus === "REGISTERED") {
+                showView(viewActive);
+            } else {
+                // Not subscribed, send OTP automatically
+                setStatus('Sending OTP...', '');
+                const otpRes = await apiCall('send_otp.php', { user_mobile: mobile });
+                if(otpRes.success || otpRes.statusCode === "S1000") {
+                    currentRefNo = otpRes.referenceNo;
+                    showView(viewOtp);
+                    setStatus('OTP sent successfully.', 'success');
+                } else {
+                    setStatus(otpRes.message || otpRes.statusDetail || 'Failed to send OTP.', 'error');
+                }
+            }
+        }
+
+        async function handleVerifyOtp() {
+            const otp = document.getElementById('otpInput').value.trim();
+            if(!otp) return setStatus('Please enter the OTP.', 'error');
+            
+            setStatus('Verifying...', '');
+            const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo });
+            
+            if(res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
+                showView(viewActive);
+                setStatus('Successfully subscribed!', 'success');
+            } else {
+                setStatus(res.message || res.statusDetail || 'Invalid OTP.', 'error');
+            }
+        }
+
+        async function handleUnsubscribe() {
+            setStatus('Unsubscribing...', '');
+            const res = await apiCall('unsubscribe.php', { user_mobile: currentMobile });
+            
+            if(res.success || res.subscriptionStatus === "UNREGISTERED") {
+                showView(viewMobile);
+                setStatus('Successfully unsubscribed.', 'success');
+            } else {
+                setStatus(res.error || res.message || 'Failed to unsubscribe.', 'error');
             }
         }
     </script>
