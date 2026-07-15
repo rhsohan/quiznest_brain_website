@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizNest Brain - Challenge Your Mind!</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root[data-theme="dark"] {
+            --primary: #4D6A92;
+            --secondary: #A2C6E9;
+            --accent: #5A8FA0;
+            
+            /* Backgrounds */
+            --bg-main: #0f172a;
+            --bg-alt: #0B1120;
+            --bg-deep: #070B14;
+            --bg-footer: #000000;
+            --bg-gradient-end: #1e293b;
+            
+            /* Text */
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #cbd5e1;
+            
+            /* UI Elements */
+            --glass-nav: rgba(7, 11, 20, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-hover: rgba(255, 255, 255, 0.04);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(255, 255, 255, 0.1);
+        }
+
+        :root[data-theme="light"] {
+            --primary: #4D6A92;
+            --secondary: #2C4870; /* Darker secondary for better contrast */
+            --accent: #5A8FA0;
+            
+            /* Backgrounds */
+            --bg-main: #f8fafc;
+            --bg-alt: #f1f5f9;
+            --bg-deep: #e2e8f0;
+            --bg-footer: #cbd5e1;
+            --bg-gradient-end: #e2e8f0;
+            
+            /* Text */
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #334155;
+            
+            /* UI Elements */
+            --glass-nav: rgba(248, 250, 252, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-hover: rgba(255, 255, 255, 1);
+            --border-color: rgba(0, 0, 0, 0.05);
+            --border-hover: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth theme transition */
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Navbar */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-nav);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            margin-left: 12px;
+        }
+        .theme-toggle:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links a.nav-item {
+                display: none;
+            }
+        }
+
+        /* Generic Section Styling */
+        section {
+            padding: 100px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+        
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section (Gradient Background) */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-gradient-end) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            top: -200px;
+            right: -100px;
+            animation: float 20s infinite alternate;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            bottom: -200px;
+            left: -100px;
+            animation: float 15s infinite alternate reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .platform-badge {
+            background: rgba(162, 198, 233, 0.15);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(162, 198, 233, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin-bottom: 40px;
+        }
+
+        /* Glassmorphism Download Card */
+        .download-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 18px 32px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -10px var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .btn:hover {
+            box-shadow: 0 15px 25px -10px var(--primary);
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        .pricing-alert {
+            background: rgba(90, 143, 160, 0.15);
+            border: 1px solid rgba(90, 143, 160, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: left;
+        }
+
+        .pricing-alert strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .pricing-alert p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* About Section (Solid Dark Background) */
+        .about {
+            background-color: var(--bg-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .about-content p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .about-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-box h4 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 4px;
+        }
+        
+        .stat-box span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* How it Works Section (Gradient Overlay) */
+        .how-it-works {
+            background-color: var(--bg-main);
+            position: relative;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            margin: 0 auto 24px;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+        }
+
+        .step h3 {
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Features Section (Darker Background) */
+        .features {
+            background-color: var(--bg-alt);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover {
+            background: var(--card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: rgba(77, 106, 146, 0.15); /* Primary with opacity */
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+
+        .feature-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .feature-box p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* FAQ Section (Darkest Background) */
+        .faq-section {
+            background-color: var(--bg-deep);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .faq-item h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .faq-item h4 i {
+            color: var(--primary);
+        }
+        
+        .faq-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding-left: 30px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 5% 40px;
+            background: var(--bg-footer);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-logo i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <i class="fa-solid fa-brain"></i>
+            QuizNest Brain
+        </a>
+        <div class="nav-links">
+            <a href="#about" class="nav-item">About</a>
+            <a href="#how-it-works" class="nav-item">How It Works</a>
+            <a href="#features" class="nav-item">Features</a>
+            <a href="#faq" class="nav-item">FAQ</a>
+            <div style="font-weight: 600; color: var(--primary); margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border-color);">Powered by BDApps</div>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="platform-badge">
+                <i class="fa-brands fa-android"></i> Exclusively for Android 8.0+
+            </div>
+            <h1>Master Your Mind. <br> Win the Game.</h1>
+            <p>Join thousands of players in Bangladesh testing their knowledge daily. Fast OTP login, premium categories, and seamless BDApps integration.</p>
+            
+            <div class="download-card">
+                <a href="app-release.apk" class="btn" download>
+                    <i class="fa-solid fa-download"></i>
+                    Download APK
+                </a>
+                
+                <div class="pricing-alert">
+                    <strong><i class="fa-solid fa-tag"></i> Subscription Details</strong>
+                    <p>(2.78 BDT / 5.56 BDT) including (Vat+SC+SD) For Robi and Airtel Users only.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="section-title">
+                <h2>What is QuizNest Brain?</h2>
+            </div>
+            <p>QuizNest Brain is the premier trivia and knowledge-testing application designed specifically for the Bangladesh mobile market. Integrated securely with the BDApps ecosystem, we provide a seamless, password-less experience for users to challenge themselves across multiple domains.</p>
+            <p>Whether you're looking to sharpen your coding skills or test your general knowledge, our constantly updating question bank ensures you always have a fresh challenge waiting.</p>
+            
+            <div class="about-stats">
+                <div class="stat-box">
+                    <h4>1000+</h4>
+                    <span>Curated Questions</span>
+                </div>
+                <div class="stat-box">
+                    <h4>Zero</h4>
+                    <span>Passwords Needed</span>
+                </div>
+                <div class="stat-box">
+                    <h4>100%</h4>
+                    <span>Secure Billing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-title">
+            <h2>Start Playing in Seconds</h2>
+            <p>Our integration with BDApps makes getting started completely frictionless.</p>
+        </div>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Download the APK</h3>
+                <p>Click the download button above and install the official QuizNest Brain Android application on your smartphone.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Verify Mobile</h3>
+                <p>Enter your Robi or Airtel mobile number. You'll receive a secure OTP instantly. No need to create a complex password or email account.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Play & Learn</h3>
+                <p>Select your favorite categories, answer questions under time pressure, and review your performance to boost your knowledge.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="section-title">
+            <h2>App Features</h2>
+            <p>Built from the ground up for a premium user experience.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+                <h3>Instant OTP Login</h3>
+                <p>Forget the hassle of passwords. Our direct integration with BDApps allows you to log in securely using just your mobile phone number and a one-time PIN.</p>
+            </div>
+
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3>Diverse Categories</h3>
+                <p>Tackle subjects ranging from Flutter App Development to General Science. Our expert curators constantly add new categories to keep the game fresh.</p>
+            </div>
+
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3>Detailed Analytics</h3>
+                <p>Don't just play—learn! Get a detailed breakdown of your correct and incorrect answers at the end of every quiz to track your mastery.</p>
+            </div>
+            
+            <div class="feature-box">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-ban"></i>
+                </div>
+                <h3>Easy Unsubscribe</h3>
+                <p>We believe in full transparency. You can cancel your subscription at any time directly from your Profile screen with a single tap. No hidden menus.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about QuizNest Brain.</p>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-circle-question"></i> What are the subscription charges?</h4>
+                <p>The subscription fee is (2.78 BDT / 5.56 BDT) including (Vat+SC+SD). This service is exclusively available for Robi and Airtel Users in Bangladesh.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-circle-question"></i> What platforms are supported?</h4>
+                <p>Currently, QuizNest Brain is exclusively available for Android devices running Android 8.0 or newer. Ensure you enable "Install from Unknown Sources" when installing the APK.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-circle-question"></i> How do I unsubscribe?</h4>
+                <p>You can easily unsubscribe at any time by opening the app, navigating to the Profile screen, and tapping the red "Unsubscribe & Log Out" button. You will be instantly unsubscribed and logged out.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4><i class="fa-solid fa-circle-question"></i> Is my data secure?</h4>
+                <p>Yes! We do not collect or store passwords, emails, or personal identification. We only use your mobile number for secure BDApps authentication and subscription management.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+        <p>&copy; 2026 QuizNest Brain. Built specifically for the BDApps App Store.</p>
+        <div class="footer-links">
+            <a href="mailto:support@bdapps.com">Contact BDApps Support</a>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        const html = document.documentElement;
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.className = 'fa-solid fa-sun'; // Show sun in dark mode to switch to light
+            } else {
+                icon.className = 'fa-solid fa-moon'; // Show moon in light mode to switch to dark
+            }
+        }
+    </script>
+</body>
+</html>
