@@ -958,6 +958,8 @@
                 isSubscribed = true;
                 showView(viewActive);
                 updateDownloadSectionVisibility();
+            } else if (res.subscriptionStatus === "INITIAL CHARGING PENDING") {
+                setStatus('Subscription charge is pending. Please ensure you have sufficient mobile balance (2.78 BDT) and try again.', 'error');
             } else {
                 // Not subscribed, send OTP automatically
                 setStatus('Sending OTP...', '');
@@ -984,6 +986,8 @@
                 showView(viewActive);
                 updateDownloadSectionVisibility();
                 setStatus('Successfully subscribed!', 'success');
+            } else if (res.subscriptionStatus === "INITIAL CHARGING PENDING") {
+                setStatus('OTP Verified! But the subscription charge is pending. Please ensure you have sufficient mobile balance (2.78 BDT) and check again later.', 'error');
             } else {
                 setStatus(res.message || res.statusDetail || 'Invalid OTP.', 'error');
             }
