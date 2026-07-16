@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +8,30 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root[data-theme="dark"] {
             --primary: #4D6A92;
             --secondary: #A2C6E9;
             --accent: #5A8FA0;
-            
+
             /* Backgrounds */
             --bg-main: #0f172a;
             --bg-alt: #0B1120;
             --bg-deep: #070B14;
             --bg-footer: #000000;
             --bg-gradient-end: #1e293b;
-            
+
             /* Text */
             --text-primary: #ffffff;
             --text-secondary: #94a3b8;
             --text-muted: #cbd5e1;
-            
+
             /* UI Elements */
             --glass-nav: rgba(7, 11, 20, 0.85);
             --card-bg: rgba(255, 255, 255, 0.02);
@@ -39,21 +42,22 @@
 
         :root[data-theme="light"] {
             --primary: #4D6A92;
-            --secondary: #2C4870; /* Darker secondary for better contrast */
+            --secondary: #2C4870;
+            /* Darker secondary for better contrast */
             --accent: #5A8FA0;
-            
+
             /* Backgrounds */
             --bg-main: #f8fafc;
             --bg-alt: #f1f5f9;
             --bg-deep: #e2e8f0;
             --bg-footer: #cbd5e1;
             --bg-gradient-end: #e2e8f0;
-            
+
             /* Text */
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-muted: #334155;
-            
+
             /* UI Elements */
             --glass-nav: rgba(248, 250, 252, 0.85);
             --card-bg: rgba(255, 255, 255, 0.8);
@@ -66,7 +70,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth theme transition */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            /* Smooth theme transition */
         }
 
         body {
@@ -111,7 +116,7 @@
             gap: 24px;
             align-items: center;
         }
-        
+
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
@@ -119,7 +124,7 @@
             font-size: 0.95rem;
             transition: color 0.3s;
         }
-        
+
         .nav-links a:hover {
             color: var(--primary);
         }
@@ -133,6 +138,7 @@
             transition: color 0.3s;
             margin-left: 12px;
         }
+
         .theme-toggle:hover {
             color: var(--primary);
         }
@@ -147,6 +153,7 @@
         .subscription-section {
             background-color: var(--bg-alt);
         }
+
         .subs-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -155,14 +162,15 @@
             max-width: 500px;
             margin: 0 auto;
             text-align: center;
-            box-shadow: 0 15px 35px -5px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1);
         }
+
         .subs-input {
             width: 100%;
             padding: 16px;
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
-            background: rgba(0,0,0,0.03);
+            background: rgba(0, 0, 0, 0.03);
             color: var(--text-primary);
             border-radius: 12px;
             font-size: 1.1rem;
@@ -170,31 +178,51 @@
             outline: none;
             transition: all 0.3s;
         }
+
         :root[data-theme="dark"] .subs-input {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
         }
+
         .subs-input:focus {
             border-color: var(--primary);
             background: transparent;
         }
+
         .btn-sub {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             box-shadow: 0 10px 20px -10px #10b981;
         }
-        .btn-sub:hover { box-shadow: 0 15px 25px -10px #10b981; }
+
+        .btn-sub:hover {
+            box-shadow: 0 15px 25px -10px #10b981;
+        }
+
         .btn-unsub {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             box-shadow: 0 10px 20px -10px #ef4444;
         }
-        .btn-unsub:hover { box-shadow: 0 15px 25px -10px #ef4444; }
+
+        .btn-unsub:hover {
+            box-shadow: 0 15px 25px -10px #ef4444;
+        }
+
         .subs-status {
             margin-top: 16px;
             font-size: 0.95rem;
             min-height: 24px;
         }
-        .subs-status.error { color: #ef4444; }
-        .subs-status.success { color: #10b981; }
-        .view-hidden { display: none !important; }
+
+        .subs-status.error {
+            color: #ef4444;
+        }
+
+        .subs-status.success {
+            color: #10b981;
+        }
+
+        .view-hidden {
+            display: none !important;
+        }
 
         /* Generic Section Styling */
         section {
@@ -205,14 +233,14 @@
             text-align: center;
             margin-bottom: 60px;
         }
-        
+
         .section-title h2 {
             font-family: 'Outfit', sans-serif;
             font-size: clamp(2rem, 4vw, 3rem);
             color: var(--text-primary);
             margin-bottom: 16px;
         }
-        
+
         .section-title p {
             color: var(--text-secondary);
             font-size: 1.1rem;
@@ -262,8 +290,13 @@
         }
 
         @keyframes float {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
         }
 
         .hero-content {
@@ -384,7 +417,7 @@
             max-width: 800px;
             text-align: center;
         }
-        
+
         .about-content p {
             font-size: 1.15rem;
             color: var(--text-secondary);
@@ -409,7 +442,7 @@
             font-family: 'Outfit', sans-serif;
             margin-bottom: 4px;
         }
-        
+
         .stat-box span {
             color: var(--text-secondary);
             font-size: 0.9rem;
@@ -453,7 +486,7 @@
             font-weight: 800;
             font-family: 'Outfit', sans-serif;
             margin: 0 auto 24px;
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
         }
 
         .step h3 {
@@ -499,7 +532,8 @@
             width: 60px;
             height: 60px;
             border-radius: 16px;
-            background: rgba(77, 106, 146, 0.15); /* Primary with opacity */
+            background: rgba(77, 106, 146, 0.15);
+            /* Primary with opacity */
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -548,11 +582,11 @@
             align-items: center;
             gap: 12px;
         }
-        
+
         .faq-item h4 i {
             color: var(--primary);
         }
-        
+
         .faq-item p {
             color: var(--text-secondary);
             font-size: 0.95rem;
@@ -580,7 +614,7 @@
             gap: 24px;
             margin-top: 16px;
         }
-        
+
         .footer-links a {
             color: var(--primary);
             text-decoration: none;
@@ -588,6 +622,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Navigation -->
@@ -602,7 +637,9 @@
             <a href="#subscription" class="nav-item">Manage Subscription</a>
             <a href="#features" class="nav-item">Features</a>
             <a href="#faq" class="nav-item">FAQ</a>
-            <div style="font-weight: 600; color: var(--primary); margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border-color);">Powered by BDApps</div>
+            <div
+                style="font-weight: 600; color: var(--primary); margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border-color);">
+                Powered by BDApps</div>
             <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
                 <i class="fa-solid fa-moon"></i>
             </button>
@@ -616,14 +653,15 @@
                 <i class="fa-brands fa-android"></i> Exclusively for Android 8.0+
             </div>
             <h1>Master Your Mind. <br> Win the Game.</h1>
-            <p>Join thousands of players in Bangladesh testing their knowledge daily. Fast OTP login, premium categories, and seamless BDApps integration.</p>
-            
+            <p>Join thousands of players in Bangladesh testing their knowledge daily. Fast OTP login, premium
+                categories, and seamless BDApps integration.</p>
+
             <div class="download-card" id="preSubscribeSection">
                 <a href="#subscription" class="btn">
                     <i class="fa-solid fa-arrow-down"></i>
                     Verify Subscription to Download
                 </a>
-                
+
                 <div class="pricing-alert">
                     <strong><i class="fa-solid fa-tag"></i> Subscription Details</strong>
                     <p>(2.78 BDT / 5.56 BDT) including (Vat+SC+SD) For Robi and Airtel Users only.</p>
@@ -631,11 +669,11 @@
             </div>
 
             <div class="download-card" id="downloadSection" style="display: none;">
-                <a href="https://bdappsdigitalapps.com/NADB26093/app-release.apk" class="btn" download>
+                <a href="https://bdappsdigitalapps.com/NADB26093/quiznest_brain.apk" class="btn" download>
                     <i class="fa-solid fa-download"></i>
                     Download APK
                 </a>
-                
+
                 <div class="pricing-alert">
                     <strong><i class="fa-solid fa-tag"></i> Subscription Details</strong>
                     <p>(2.78 BDT / 5.56 BDT) including (Vat+SC+SD) For Robi and Airtel Users only.</p>
@@ -650,9 +688,12 @@
             <div class="section-title">
                 <h2>What is QuizNest Brain?</h2>
             </div>
-            <p>QuizNest Brain is the premier trivia and knowledge-testing application designed specifically for the Bangladesh mobile market. Integrated securely with the BDApps ecosystem, we provide a seamless, password-less experience for users to challenge themselves across multiple domains.</p>
-            <p>Whether you're looking to sharpen your coding skills or test your general knowledge, our constantly updating question bank ensures you always have a fresh challenge waiting.</p>
-            
+            <p>QuizNest Brain is the premier trivia and knowledge-testing application designed specifically for the
+                Bangladesh mobile market. Integrated securely with the BDApps ecosystem, we provide a seamless,
+                password-less experience for users to challenge themselves across multiple domains.</p>
+            <p>Whether you're looking to sharpen your coding skills or test your general knowledge, our constantly
+                updating question bank ensures you always have a fresh challenge waiting.</p>
+
             <div class="about-stats">
                 <div class="stat-box">
                     <h4>1000+</h4>
@@ -676,22 +717,25 @@
             <h2>Start Playing in Seconds</h2>
             <p>Follow these simple instructions to subscribe, download, and start playing.</p>
         </div>
-        
+
         <div class="steps-container">
             <div class="step">
                 <div class="step-number">1</div>
                 <h3>Verify & Subscribe</h3>
-                <p>Enter your Robi or Airtel mobile number in the subscription section below. You'll receive a secure OTP instantly to verify your subscription.</p>
+                <p>Enter your Robi or Airtel mobile number in the subscription section below. You'll receive a secure
+                    OTP instantly to verify your subscription.</p>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
                 <h3>Download the APK</h3>
-                <p>Once your subscription is active, the secure Download APK button will appear. Install the QuizNest Brain app on your smartphone.</p>
+                <p>Once your subscription is active, the secure Download APK button will appear. Install the QuizNest
+                    Brain app on your smartphone.</p>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
                 <h3>Play & Learn</h3>
-                <p>Open the app, log in automatically with your verified number, select your favorite categories, and boost your knowledge.</p>
+                <p>Open the app, log in automatically with your verified number, select your favorite categories, and
+                    boost your knowledge.</p>
             </div>
         </div>
     </section>
@@ -707,7 +751,7 @@
                 <input type="tel" id="mobileInput" class="subs-input" placeholder="01XXXXXXXXX or 8801XXXXXXXXX">
                 <button class="btn" onclick="handleCheckStatus()">Check Status & Subscribe</button>
             </div>
-            
+
             <div id="subs-otp-view" class="view-hidden">
                 <p style="margin-bottom: 20px; color: var(--text-secondary);">An OTP has been sent to your mobile.</p>
                 <input type="number" id="otpInput" class="subs-input" placeholder="Enter 6-digit OTP">
@@ -715,10 +759,13 @@
             </div>
 
             <div id="subs-active-view" class="view-hidden">
-                <div style="font-size: 48px; color: #10b981; margin-bottom: 16px;"><i class="fa-solid fa-circle-check"></i></div>
+                <div style="font-size: 48px; color: #10b981; margin-bottom: 16px;"><i
+                        class="fa-solid fa-circle-check"></i></div>
                 <h3 style="margin-bottom: 8px;">Subscription Active</h3>
-                <p style="margin-bottom: 24px; color: var(--text-secondary);">You are currently registered to QuizNest Brain.</p>
-                <a href="https://bdappsdigitalapps.com/NADB26093/app-release.apk" class="btn" style="margin-bottom: 16px; width: 100%;" download>
+                <p style="margin-bottom: 24px; color: var(--text-secondary);">You are currently registered to QuizNest
+                    Brain.</p>
+                <a href="https://bdappsdigitalapps.com/NADB26093/quiznest_brain.apk" class="btn"
+                    style="margin-bottom: 16px; width: 100%;" download>
                     <i class="fa-solid fa-download"></i> Download APK
                 </a>
                 <button class="btn btn-unsub" style="width: 100%;" onclick="handleUnsubscribe()">Unsubscribe</button>
@@ -741,7 +788,8 @@
                     <i class="fa-solid fa-mobile-screen"></i>
                 </div>
                 <h3>Instant OTP Login</h3>
-                <p>Forget the hassle of passwords. Our direct integration with BDApps allows you to log in securely using just your mobile phone number and a one-time PIN.</p>
+                <p>Forget the hassle of passwords. Our direct integration with BDApps allows you to log in securely
+                    using just your mobile phone number and a one-time PIN.</p>
             </div>
 
             <div class="feature-box">
@@ -749,7 +797,8 @@
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <h3>Diverse Categories</h3>
-                <p>Tackle subjects ranging from Flutter App Development to General Science. Our expert curators constantly add new categories to keep the game fresh.</p>
+                <p>Tackle subjects ranging from Flutter App Development to General Science. Our expert curators
+                    constantly add new categories to keep the game fresh.</p>
             </div>
 
             <div class="feature-box">
@@ -757,15 +806,17 @@
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
                 <h3>Detailed Analytics</h3>
-                <p>Don't just play—learn! Get a detailed breakdown of your correct and incorrect answers at the end of every quiz to track your mastery.</p>
+                <p>Don't just play—learn! Get a detailed breakdown of your correct and incorrect answers at the end of
+                    every quiz to track your mastery.</p>
             </div>
-            
+
             <div class="feature-box">
                 <div class="feature-icon">
                     <i class="fa-solid fa-ban"></i>
                 </div>
                 <h3>Easy Unsubscribe</h3>
-                <p>We believe in full transparency. You can cancel your subscription at any time directly from your Profile screen with a single tap. No hidden menus.</p>
+                <p>We believe in full transparency. You can cancel your subscription at any time directly from your
+                    Profile screen with a single tap. No hidden menus.</p>
             </div>
         </div>
     </section>
@@ -780,22 +831,27 @@
         <div class="faq-container">
             <div class="faq-item">
                 <h4><i class="fa-solid fa-circle-question"></i> What are the subscription charges?</h4>
-                <p>The subscription fee is (2.78 BDT / 5.56 BDT) including (Vat+SC+SD). This service is exclusively available for Robi and Airtel Users in Bangladesh.</p>
+                <p>The subscription fee is (2.78 BDT / 5.56 BDT) including (Vat+SC+SD). This service is exclusively
+                    available for Robi and Airtel Users in Bangladesh.</p>
             </div>
-            
+
             <div class="faq-item">
                 <h4><i class="fa-solid fa-circle-question"></i> What platforms are supported?</h4>
-                <p>Currently, QuizNest Brain is exclusively available for Android devices running Android 8.0 or newer. Ensure you enable "Install from Unknown Sources" when installing the APK.</p>
+                <p>Currently, QuizNest Brain is exclusively available for Android devices running Android 8.0 or newer.
+                    Ensure you enable "Install from Unknown Sources" when installing the APK.</p>
             </div>
 
             <div class="faq-item">
                 <h4><i class="fa-solid fa-circle-question"></i> How do I unsubscribe?</h4>
-                <p>You can easily unsubscribe at any time by opening the app, navigating to the Profile screen, and tapping the red "Unsubscribe & Log Out" button. You will be instantly unsubscribed and logged out.</p>
+                <p>You can easily unsubscribe at any time by opening the app, navigating to the Profile screen, and
+                    tapping the red "Unsubscribe & Log Out" button. You will be instantly unsubscribed and logged out.
+                </p>
             </div>
-            
+
             <div class="faq-item">
                 <h4><i class="fa-solid fa-circle-question"></i> Is my data secure?</h4>
-                <p>Yes! We do not collect or store passwords, emails, or personal identification. We only use your mobile number for secure BDApps authentication and subscription management.</p>
+                <p>Yes! We do not collect or store passwords, emails, or personal identification. We only use your
+                    mobile number for secure BDApps authentication and subscription management.</p>
             </div>
         </div>
     </section>
@@ -825,7 +881,7 @@
         themeToggle.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateIcon(newTheme);
@@ -891,14 +947,14 @@
 
         async function handleCheckStatus() {
             const mobile = document.getElementById('mobileInput').value.trim();
-            if(!mobile) return setStatus('Please enter a mobile number.', 'error');
-            
+            if (!mobile) return setStatus('Please enter a mobile number.', 'error');
+
             setStatus('Checking status...', '');
             currentMobile = mobile;
 
             const res = await apiCall('check_subscription.php', { user_mobile: mobile });
-            
-            if(res.isSubscribed || res.subscriptionStatus === "REGISTERED") {
+
+            if (res.isSubscribed || res.subscriptionStatus === "REGISTERED") {
                 isSubscribed = true;
                 showView(viewActive);
                 updateDownloadSectionVisibility();
@@ -906,7 +962,7 @@
                 // Not subscribed, send OTP automatically
                 setStatus('Sending OTP...', '');
                 const otpRes = await apiCall('send_otp.php', { user_mobile: mobile });
-                if(otpRes.success || otpRes.statusCode === "S1000") {
+                if (otpRes.success || otpRes.statusCode === "S1000") {
                     currentRefNo = otpRes.referenceNo;
                     showView(viewOtp);
                     setStatus('OTP sent successfully.', 'success');
@@ -918,12 +974,12 @@
 
         async function handleVerifyOtp() {
             const otp = document.getElementById('otpInput').value.trim();
-            if(!otp) return setStatus('Please enter the OTP.', 'error');
-            
+            if (!otp) return setStatus('Please enter the OTP.', 'error');
+
             setStatus('Verifying...', '');
             const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo });
-            
-            if(res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
+
+            if (res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
                 isSubscribed = true;
                 showView(viewActive);
                 updateDownloadSectionVisibility();
@@ -936,8 +992,8 @@
         async function handleUnsubscribe() {
             setStatus('Unsubscribing...', '');
             const res = await apiCall('unsubscribe.php', { user_mobile: currentMobile });
-            
-            if(res.success || res.subscriptionStatus === "UNREGISTERED") {
+
+            if (res.success || res.subscriptionStatus === "UNREGISTERED") {
                 isSubscribed = false;
                 showView(viewMobile);
                 updateDownloadSectionVisibility();
@@ -948,4 +1004,5 @@
         }
     </script>
 </body>
+
 </html>
