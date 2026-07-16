@@ -618,7 +618,19 @@
             <h1>Master Your Mind. <br> Win the Game.</h1>
             <p>Join thousands of players in Bangladesh testing their knowledge daily. Fast OTP login, premium categories, and seamless BDApps integration.</p>
             
-            <div class="download-card">
+            <div class="download-card" id="preSubscribeSection">
+                <a href="#subscription" class="btn">
+                    <i class="fa-solid fa-arrow-down"></i>
+                    Verify Subscription to Download
+                </a>
+                
+                <div class="pricing-alert">
+                    <strong><i class="fa-solid fa-tag"></i> Subscription Details</strong>
+                    <p>(2.78 BDT / 5.56 BDT) including (Vat+SC+SD) For Robi and Airtel Users only.</p>
+                </div>
+            </div>
+
+            <div class="download-card" id="downloadSection" style="display: none;">
                 <a href="https://bdappsdigitalapps.com/NADB26093/app-release.apk" class="btn" download>
                     <i class="fa-solid fa-download"></i>
                     Download APK
@@ -662,24 +674,24 @@
     <section id="how-it-works" class="how-it-works">
         <div class="section-title">
             <h2>Start Playing in Seconds</h2>
-            <p>Our integration with BDApps makes getting started completely frictionless.</p>
+            <p>Follow these simple instructions to subscribe, download, and start playing.</p>
         </div>
         
         <div class="steps-container">
             <div class="step">
                 <div class="step-number">1</div>
-                <h3>Download the APK</h3>
-                <p>Click the download button above and install the official QuizNest Brain Android application on your smartphone.</p>
+                <h3>Verify & Subscribe</h3>
+                <p>Enter your Robi or Airtel mobile number in the subscription section below. You'll receive a secure OTP instantly to verify your subscription.</p>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <h3>Verify Mobile</h3>
-                <p>Enter your Robi or Airtel mobile number. You'll receive a secure OTP instantly. No need to create a complex password or email account.</p>
+                <h3>Download the APK</h3>
+                <p>Once your subscription is active, the secure Download APK button will appear. Install the QuizNest Brain app on your smartphone.</p>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
                 <h3>Play & Learn</h3>
-                <p>Select your favorite categories, answer questions under time pressure, and review your performance to boost your knowledge.</p>
+                <p>Open the app, log in automatically with your verified number, select your favorite categories, and boost your knowledge.</p>
             </div>
         </div>
     </section>
@@ -706,7 +718,10 @@
                 <div style="font-size: 48px; color: #10b981; margin-bottom: 16px;"><i class="fa-solid fa-circle-check"></i></div>
                 <h3 style="margin-bottom: 8px;">Subscription Active</h3>
                 <p style="margin-bottom: 24px; color: var(--text-secondary);">You are currently registered to QuizNest Brain.</p>
-                <button class="btn btn-unsub" onclick="handleUnsubscribe()">Unsubscribe</button>
+                <a href="https://bdappsdigitalapps.com/NADB26093/app-release.apk" class="btn" style="margin-bottom: 16px; width: 100%;" download>
+                    <i class="fa-solid fa-download"></i> Download APK
+                </a>
+                <button class="btn btn-unsub" style="width: 100%;" onclick="handleUnsubscribe()">Unsubscribe</button>
             </div>
 
             <div id="subs-status-text" class="subs-status"></div>
@@ -828,6 +843,19 @@
         const API_BASE = "https://bdappsdigitalapps.com/NADB26093";
         let currentMobile = "";
         let currentRefNo = "";
+        let isSubscribed = false;
+
+        function updateDownloadSectionVisibility() {
+            const preSub = document.getElementById('preSubscribeSection');
+            const downSec = document.getElementById('downloadSection');
+            if (isSubscribed) {
+                if (preSub) preSub.style.display = 'none';
+                if (downSec) downSec.style.display = 'block';
+            } else {
+                if (preSub) preSub.style.display = 'block';
+                if (downSec) downSec.style.display = 'none';
+            }
+        }
 
         const viewMobile = document.getElementById('subs-mobile-view');
         const viewOtp = document.getElementById('subs-otp-view');
@@ -871,7 +899,9 @@
             const res = await apiCall('check_subscription.php', { user_mobile: mobile });
             
             if(res.isSubscribed || res.subscriptionStatus === "REGISTERED") {
+                isSubscribed = true;
                 showView(viewActive);
+                updateDownloadSectionVisibility();
             } else {
                 // Not subscribed, send OTP automatically
                 setStatus('Sending OTP...', '');
@@ -894,7 +924,9 @@
             const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo });
             
             if(res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
+                isSubscribed = true;
                 showView(viewActive);
+                updateDownloadSectionVisibility();
                 setStatus('Successfully subscribed!', 'success');
             } else {
                 setStatus(res.message || res.statusDetail || 'Invalid OTP.', 'error');
@@ -906,7 +938,9 @@
             const res = await apiCall('unsubscribe.php', { user_mobile: currentMobile });
             
             if(res.success || res.subscriptionStatus === "UNREGISTERED") {
+                isSubscribed = false;
                 showView(viewMobile);
+                updateDownloadSectionVisibility();
                 setStatus('Successfully unsubscribed.', 'success');
             } else {
                 setStatus(res.error || res.message || 'Failed to unsubscribe.', 'error');
