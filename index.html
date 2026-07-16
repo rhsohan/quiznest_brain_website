@@ -968,6 +968,12 @@
                     currentRefNo = otpRes.referenceNo;
                     showView(viewOtp);
                     setStatus('OTP sent successfully.', 'success');
+                } else if (otpRes.message && otpRes.message.toLowerCase().includes("already registered") || otpRes.statusDetail && otpRes.statusDetail.toLowerCase().includes("already registered")) {
+                    // Fallback: If OTP API says they are already registered, unlock the app
+                    isSubscribed = true;
+                    showView(viewActive);
+                    updateDownloadSectionVisibility();
+                    setStatus('Welcome back! Your subscription is active.', 'success');
                 } else {
                     setStatus(otpRes.message || otpRes.statusDetail || 'Failed to send OTP.', 'error');
                 }
