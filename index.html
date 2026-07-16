@@ -985,7 +985,7 @@
             if (!otp) return setStatus('Please enter the OTP.', 'error');
 
             setStatus('Verifying...', '');
-            const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo });
+            const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo, user_mobile: currentMobile });
 
             if (res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
                 isSubscribed = true;
