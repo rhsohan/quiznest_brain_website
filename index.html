@@ -1009,7 +1009,7 @@
                 updateDownloadSectionVisibility();
                 setStatus('Successfully unsubscribed.', 'success');
             } else {
-                setStatus(res.error || res.message || 'Failed to unsubscribe.', 'error');
+                setStatus(res.error || res.message || res.statusDetail || 'Failed to unsubscribe.', 'error');
             }
         }
     </script>
