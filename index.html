@@ -602,6 +602,69 @@
             font-size: 0.9rem;
         }
 
+        .manual-instructions {
+            max-width: 500px;
+            margin: 32px auto 0;
+            text-align: left;
+        }
+
+        .manual-instructions h3 {
+            text-align: center;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .instruction-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .instruction-box h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            margin-top: 16px;
+        }
+
+        .instruction-box h4:first-child {
+            margin-top: 0;
+        }
+
+        .instruction-box ul {
+            padding-left: 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .instruction-box code {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .instruction-alert {
+            display: flex;
+            gap: 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .instruction-alert i {
+            color: var(--danger);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
         .footer-logo i {
             font-size: 2rem;
             color: var(--primary);
@@ -772,6 +835,27 @@
             </div>
 
             <div id="subs-status-text" class="subs-status"></div>
+        </div>
+
+        <div class="manual-instructions">
+            <h3>Alternative Methods</h3>
+            <div class="instruction-box">
+                <h4>How to Subscribe:</h4>
+                <ul>
+                    <li><strong>SMS:</strong> Type <code>START 52487</code> and send to 21213 to complete the subscription.</li>
+                    <li><strong>USSD:</strong> Dial <code>*213*52488#</code> to subscribe.</li>
+                </ul>
+                
+                <h4>How to Unsubscribe:</h4>
+                <ul>
+                    <li><strong>SMS:</strong> Type <code>STOP 52487</code> and send to 21213 to complete the unsubscription.</li>
+                </ul>
+            </div>
+            
+            <div class="instruction-alert">
+                <i class="fa-solid fa-circle-info"></i>
+                <p><strong>Important Note:</strong> If you subscribed using the USSD or SMS methods above, you <strong>must</strong> unsubscribe using the SMS method. The website and app "Unsubscribe" buttons will only work if you originally subscribed via OTP on this website or inside the app.</p>
+            </div>
         </div>
     </section>
 
