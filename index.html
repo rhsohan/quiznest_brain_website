@@ -1074,13 +1074,13 @@
             setStatus('Verifying...', '');
             const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo, user_mobile: currentMobile });
 
-            if (res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
+            if (res.subscriptionStatus === "INITIAL CHARGING PENDING") {
+                setStatus('OTP Verified! But the subscription charge is pending. Please ensure you have sufficient mobile balance (2.78 BDT) and check again later.', 'error');
+            } else if (res.statusCode === "S1000" || res.statusCode === "SUCCESS" || res.subscriptionStatus === "REGISTERED") {
                 isSubscribed = true;
                 showView(viewActive);
                 updateDownloadSectionVisibility();
                 setStatus('Successfully subscribed!', 'success');
-            } else if (res.subscriptionStatus === "INITIAL CHARGING PENDING") {
-                setStatus('OTP Verified! But the subscription charge is pending. Please ensure you have sufficient mobile balance (2.78 BDT) and check again later.', 'error');
             } else {
                 setStatus(res.message || res.statusDetail || 'Invalid OTP.', 'error');
             }
