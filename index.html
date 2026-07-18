@@ -1100,7 +1100,8 @@
             });
 
             if (res.subscriptionStatus === "INITIAL CHARGING PENDING" || res.subscriptionStatus === "PENDING") {
-                setStatus('OTP Verified! But the subscription charge is pending. Please ensure you have sufficient mobile balance (2.78 BDT) and check again later.', 'error');
+                setStatus('Payment is processing. Please wait while we confirm your subscription...', 'error');
+                startPollingSubscription();
             } else if (res.subscriptionStatus === "REGISTERED") {
                 isSubscribed = true;
                 showView(viewActive);
