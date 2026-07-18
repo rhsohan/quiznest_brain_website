@@ -1067,6 +1067,27 @@
             }
         }
 
+        let pollingInterval = null;
+
+        function startPollingSubscription() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            let attempts = 0;
+            // Poll every 3 seconds for up to 1.5 minutes (30 attempts)
+            pollingInterval = setInterval(async () => {
+                attempts++;
+                if (attempts > 30) {
+                    clearInterval(pollingInterval);
+                    return;
+                }
+                const res = await apiCall('check_subscription.php', { user_mobile: currentMobile });
+                if (res.isSubscribed || res.subscriptionStatus === "REGISTERED") {
+                    clearInterval(pollingInterval);
+                    showView(viewActive);
+                    setStatus('Successfully subscribed!', 'success');
+                }
+            }, 3000);
+        }
+
         async function handleVerifyOtp() {
             const otp = document.getElementById('otpInput').value.trim();
             if (!otp) return setStatus('Please enter the OTP.', 'error');
@@ -1082,7 +1103,9 @@
                 updateDownloadSectionVisibility();
                 setStatus('Successfully subscribed!', 'success');
             } else {
-                setStatus(res.message || res.statusDetail || 'Invalid OTP.', 'error');
+                setStatus(res.message || res.statusDetail || 'Processing... Please wait if balance is deducted.', 'error');
+                // Start polling in case it's a pending charge or insufficient balance that gets resolved
+                startPollingSubscription();
             }
         }
 
