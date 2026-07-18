@@ -1093,7 +1093,11 @@
             if (!otp) return setStatus('Please enter the OTP.', 'error');
 
             setStatus('Verifying...', '');
-            const res = await apiCall('verify_otp.php', { Otp: otp, referenceNo: currentRefNo, user_mobile: currentMobile });
+            const res = await apiCall('verify_otp.php', { 
+                Otp: otp, 
+                referenceNo: currentRefNo, 
+                user_mobile: currentMobile 
+            });
 
             if (res.subscriptionStatus === "INITIAL CHARGING PENDING") {
                 setStatus('OTP Verified! But the subscription charge is pending. Please ensure you have sufficient mobile balance (2.78 BDT) and check again later.', 'error');
